@@ -1,4 +1,4 @@
-var mixin= {
+const mixin= {
   created: function () {
     this.hello()
   },

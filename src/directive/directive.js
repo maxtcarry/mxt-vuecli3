@@ -7,6 +7,5 @@ Vue.directive('con', {
     el.style.filter='blur(1px)';
     console.log(el.style.color)
     console.log(binding);
-
   }
 })
