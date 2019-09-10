@@ -1,5 +1,6 @@
 const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir)
+const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 //"parserOptions": {
 //   "parser": "babel-eslint"
 // }
@@ -51,13 +52,22 @@ module.exports = {
     config.output.chunkFilename(`js/[name].[chunkhash:8].js`)
   },
 
-  configureWebpack: () => {
+  configureWebpack: (config) => {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
       console.log('生产环境')
     } else if (process.env.NODE_ENV === 'development') {
       // 为开发环境修改配置...
       console.log('开发环境')
+      config.plugins.push(new SkeletonWebpackPlugin({
+          webpackConfig: {
+            entry: {
+              app: path.join(__dirname, './src/skeleton/skeleton.js'),
+            },
+          },
+          minimize: true,
+          quiet: true,
+        }))
     } else if (process.env.NODE_ENV === 'testing') {
       // 为测试环境修改配置...
       console.log('测试环境')
