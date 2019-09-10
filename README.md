@@ -2,10 +2,11 @@
 
  你可以通过npm直接下载本模板
 
- `
+ ```
   npm install maxt-vue
   maxt-vue init [项目名称]
- `
+
+ ```
 
 ### 模板介绍
 
