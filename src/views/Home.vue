@@ -1,7 +1,7 @@
 <template>
   <div class="home">
   <p>{{title|delnum}}</p>
-    <HelloWorld v-con='1 + 1' msg="Welcome to Your Vue.js App" ref='hello'/>
+    <HelloWorld v-con='1 + 2' msg="Welcome to Your Vue.js App" ref='hello'/>
   </div>
 </template>
 
@@ -24,7 +24,6 @@ export default {
     HelloWorld
   },
   mounted:function() {
-
     console.log(this.$refs.hello)
   },
 }
