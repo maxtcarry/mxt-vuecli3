@@ -2,7 +2,7 @@
   <div class="home">
   <p>{{title|delnum}}</p>
     <HelloWorld v-con='1 + 2' msg="Welcome to Your Vue.js App" ref='hello'/>
-    <router-link to="/home/home1">Home1</router-link> |
+    <router-link to="/">Home1</router-link> |
     <router-link to="/home/home2">Home2</router-link>
     <router-view/>
   </div>
