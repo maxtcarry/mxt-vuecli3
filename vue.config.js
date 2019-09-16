@@ -47,8 +47,8 @@ module.exports = {
     config.resolve.alias
       .set('@', resolve('src'))
       .set('components', resolve('src/components'))
-      .set('assets', resolve('src/assets'))
-      .set('api', resolve('src/axios/api'))
+      .set('@a', resolve('src/assets'))
+      .set('@api', resolve('src/axios/api'))
       .set('libs', resolve('src/libs'))
 
     config.output.chunkFilename(`js/[name].[chunkhash:8].js`)
