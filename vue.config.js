@@ -1,6 +1,8 @@
 const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir)
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
+
 //"parserOptions": {
 //   "parser": "babel-eslint"
 // }
@@ -55,19 +57,38 @@ module.exports = {
   configureWebpack: (config) => {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
-      console.log('生产环境')
+
     } else if (process.env.NODE_ENV === 'development') {
       // 为开发环境修改配置...
       console.log('开发环境')
+
       config.plugins.push(new SkeletonWebpackPlugin({
-          webpackConfig: {
-            entry: {
-              app: path.join(__dirname, './src/skeleton/skeleton.js'),
+            webpackConfig: {
+              entry: {
+                app: path.join(__dirname, './src/skeleton/skeleton.config.js'),
+              },
             },
-          },
-          minimize: true,
-          quiet: true,
+            router:{
+              mode:'hash',
+              routes:[
+                {
+                  path:'/',
+                  skeletonId:'Skeleton1'
+                },
+                {
+                  path:'/about',
+                  skeletonId:'Skeleton2'
+                }
+              ]
+            },
+            minimize: true,
+            quiet: true,
+
+
         }))
+
+
+
     } else if (process.env.NODE_ENV === 'testing') {
       // 为测试环境修改配置...
       console.log('测试环境')
@@ -76,6 +97,8 @@ module.exports = {
 
   // CSS 相关选项
   css: {
+    //css分离
+     extract: true,
     // 是否开启 CSS source map？
     sourceMap: process.env.NODE_ENV !== 'production',
 
@@ -96,7 +119,7 @@ module.exports = {
   // 配置 webpack-dev-server 行为。
   devServer: {
     host: 'localhost',
-    port: 8021,
+    port: 8023,
     https: false,
     hotOnly: false,
     open: 'Chrome',
