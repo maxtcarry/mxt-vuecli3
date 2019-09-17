@@ -15,8 +15,7 @@ module.exports = {
   // https://www.foobar.com/my-app/
   // 那么将这个值改为 `/my-app/`
   publicPath: process.env.NODE_ENV === 'production' ?
-    './' :
-    './',
+    './' : './',
   // 将构建好的文件输出到哪里
   outputDir: 'dist',
 
@@ -33,14 +32,11 @@ module.exports = {
   // 有效的值：`ture` | `false` | `"error"`
   // 当设置为 `"error"` 时，检查出的错误会触发编译失败。
   lintOnSave: true,
-
   // 使用带有浏览器内编译器的完整构建版本
   // 查阅 https://cn.vuejs.org/v2/guide/installation.html#运行时-编译器-vs-只包含运行时
   // compiler: false,
-
   // 是否为生产环境构建生成 source map？
   productionSourceMap: false,
-
   // 调整内部的 webpack 配置。
   // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/webpack.md
   chainWebpack: config => {
@@ -57,38 +53,32 @@ module.exports = {
   configureWebpack: (config) => {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
-
+      
     } else if (process.env.NODE_ENV === 'development') {
       // 为开发环境修改配置...
       console.log('开发环境')
 
       config.plugins.push(new SkeletonWebpackPlugin({
-            webpackConfig: {
-              entry: {
-                app: path.join(__dirname, './src/skeleton/skeleton.config.js'),
-              },
+        webpackConfig: {
+          entry: {
+            app: path.join(__dirname, './src/skeleton/skeleton.config.js'),
+          },
+        },
+        router: {
+          mode: 'hash',
+          routes: [{
+              path: '/',
+              skeletonId: 'Skeleton1'
             },
-            router:{
-              mode:'hash',
-              routes:[
-                {
-                  path:'/',
-                  skeletonId:'Skeleton1'
-                },
-                {
-                  path:'/about',
-                  skeletonId:'Skeleton2'
-                }
-              ]
-            },
-            minimize: true,
-            quiet: true,
-
-
-        }))
-
-
-
+            {
+              path: '/about',
+              skeletonId: 'Skeleton2'
+            }
+          ]
+        },
+        minimize: true,
+        quiet: true,
+      }))
     } else if (process.env.NODE_ENV === 'testing') {
       // 为测试环境修改配置...
       console.log('测试环境')
@@ -98,7 +88,7 @@ module.exports = {
   // CSS 相关选项
   css: {
     //css分离
-     extract: true,
+    extract: true,
     // 是否开启 CSS source map？
     sourceMap: process.env.NODE_ENV !== 'production',
 
