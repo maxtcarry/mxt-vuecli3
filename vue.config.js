@@ -51,34 +51,40 @@ module.exports = {
   },
 
   configureWebpack: (config) => {
+    config.plugins.push(new SkeletonWebpackPlugin({
+      webpackConfig: {
+        entry: {
+          app: path.join(__dirname, './src/skeleton/skeleton.config.js'),
+        },
+      },
+      router: {
+        mode: 'hash',
+        routes: [{
+            path: '/',
+            skeletonId: 'Skeleton1'
+          },
+          {
+            path: '/about',
+            skeletonId: 'Skeleton2'
+          }
+        ]
+      },
+      minimize: true,
+      quiet: true,
+    }))
+
+
+
+
+
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
-      
+
     } else if (process.env.NODE_ENV === 'development') {
       // 为开发环境修改配置...
       console.log('开发环境')
 
-      config.plugins.push(new SkeletonWebpackPlugin({
-        webpackConfig: {
-          entry: {
-            app: path.join(__dirname, './src/skeleton/skeleton.config.js'),
-          },
-        },
-        router: {
-          mode: 'hash',
-          routes: [{
-              path: '/',
-              skeletonId: 'Skeleton1'
-            },
-            {
-              path: '/about',
-              skeletonId: 'Skeleton2'
-            }
-          ]
-        },
-        minimize: true,
-        quiet: true,
-      }))
+
     } else if (process.env.NODE_ENV === 'testing') {
       // 为测试环境修改配置...
       console.log('测试环境')
