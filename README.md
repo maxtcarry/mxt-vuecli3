@@ -15,3 +15,14 @@
 3. vue例子（不包含语法示例，基础语法请参考vue官网）
 4. 更多vue 项目基础结构添加中
 5. 添加axios 基础适配文件
+
+
+
+
+### 插件列表
+ px转换成rem  设计稿尺寸为  750
+  ```
+  npm install amfe-flexible -S
+  npm install postcss-px2rem -S
+
+  ```

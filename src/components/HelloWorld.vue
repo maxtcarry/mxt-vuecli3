@@ -1,7 +1,9 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-  
+  <div class="test">
+
+  </div>
   </div>
 </template>
 
@@ -19,6 +21,9 @@ export default {
 h3 {
   margin: 40px 0 0;
 }
+h1{
+  font-size: 20px;
+}
 ul {
   list-style-type: none;
   padding: 0;
@@ -29,5 +34,10 @@ li {
 }
 a {
   color: #42b983;
+}
+.test{
+  width: 100px;
+  height: 100px;
+  background: red;
 }
 </style>

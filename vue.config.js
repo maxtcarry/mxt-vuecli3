@@ -6,6 +6,7 @@ const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 //"parserOptions": {
 //   "parser": "babel-eslint"
 // }
+
 module.exports = {
   // 项目部署的基础路径
   // 我们默认假设你的应用将会部署在域名的根部，
@@ -48,6 +49,7 @@ module.exports = {
       .set('libs', resolve('src/libs'))
 
     config.output.chunkFilename(`js/[name].[chunkhash:8].js`)
+
   },
 
   configureWebpack: (config) => {
@@ -102,12 +104,21 @@ module.exports = {
     loaderOptions: {
       less: {
         javascriptEnabled: true
+      },
+      postcss: {//pc 需要关掉
+        plugins:   [
+          require("postcss-px2rem")({
+            remUnit: 37.5,
+
+          })
+        ]
       }
     },
 
     // 为所有的 CSS 及其预处理文件开启 CSS Modules。
     // 这个选项不会影响 `*.vue` 文件。
-    modules: false
+    modules: false,
+
   },
   // 在生产环境下为 Babel 和 TypeScript 使用 `thread-loader`
   // 在多核机器下会默认开启。
@@ -141,6 +152,30 @@ module.exports = {
       patterns: [
         path.resolve(__dirname, './src/assets/less/settings.less')
       ]
+    }
+  },
+  //  plugins: {
+  //   'autoprefixer': {
+  //     browsers: ['Android >= 4.0', 'iOS >= 7']
+  //   },
+  //   'postcss-pxtorem': {
+  //     rootValue: 32,//结果为：设计稿元素尺寸/16，比如元素宽320px,最终页面会换算成 20rem
+  //     propList: ['*']
+  //   }
+  // }
+  pwa: {
+    name: 'My App',
+    themeColor: '#4DBA87',
+    msTileColor: '#000000',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+
+    // 配置 workbox 插件
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      // InjectManifest 模式下 swSrc 是必填的。
+      swSrc: 'dev/sw.js',
+      // ...其它 Workbox 选项...
     }
   }
 }

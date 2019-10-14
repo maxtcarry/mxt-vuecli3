@@ -12,12 +12,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+
       component: Home,
       children:[
       {                      //二级路由
         path:'/',            //二级的默认路由（此path指向上一级，即path:'/about'）
-        name:'home1',
+      
         component:Home1
       },
       {
