@@ -1,8 +1,10 @@
 const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir)
+//骨架屏
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
-
+//zip压缩
+const CompressionPlugin = require("Compression-webpack-plugin")
 //"parserOptions": {
 //   "parser": "babel-eslint"
 // }
@@ -53,6 +55,7 @@ module.exports = {
   },
 
   configureWebpack: (config) => {
+    //开启页面 骨架屏 ： 基于自定义页面  不根据页面元素生成 需要手动写骨架屏
     config.plugins.push(new SkeletonWebpackPlugin({
       webpackConfig: {
         entry: {
@@ -74,14 +77,15 @@ module.exports = {
       minimize: true,
       quiet: true,
     }))
-
-
-
-
-
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
-
+      // 开启压缩
+        config.plugins.push(new CompressionPlugin({
+          test:/\.js$|\.html$|\.css/,//匹配的文件
+          threshold:10240,//对超过10k的进行压缩
+          deleteOriginalAssets:true//是否删除文件
+        }))
+    
     } else if (process.env.NODE_ENV === 'development') {
       // 为开发环境修改配置...
       console.log('开发环境')
@@ -95,8 +99,8 @@ module.exports = {
 
   // CSS 相关选项
   css: {
-    //css分离
-    extract: true,
+    //css分离 开发环境注释掉避免css热更新 失效
+    //extract: true,
     // 是否开启 CSS source map？
     sourceMap: process.env.NODE_ENV !== 'production',
 

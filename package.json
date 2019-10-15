@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "amfe-flexible": "^2.2.1",
+    "compression-webpack-plugin": "^3.0.0",
     "core-js": "^2.6.5",
     "page-skeleton-webpack-plugin": "^0.10.12",
     "postcss-px2rem": "^0.3.0",
