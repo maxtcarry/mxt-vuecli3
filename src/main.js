@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
 import "amfe-flexible/index.js";
-import './registerServiceWorker'
+import './registerServiceWorker';
+// ie 兼容
+import '@babel/polyfill';
 Vue.config.productionTip = false
 
 new Vue({

@@ -5,9 +5,35 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 //zip压缩
 const CompressionPlugin = require("Compression-webpack-plugin")
-//"parserOptions": {
-//   "parser": "babel-eslint"
-// }
+//去除多余css
+const autoprefixer = require("autoprefixer");
+const postcssImport = require("postcss-import");
+const purgecss = require("@fullhuman/postcss-purgecss");
+const IS_PROD = ["production", "prod"].includes(process.env.NODE_ENV);
+let plugins = [];
+if (IS_PROD) {
+  plugins.push(postcssImport);
+  plugins.push(
+    purgecss({
+      content: ["./src/**/*.vue"],
+      extractors: [{
+        extractor: class Extractor {
+          static extract(content) {
+            const validSection = content.replace(
+              /<style([\s\S]*?)<\/style>+/gim,
+              ""
+            );
+            return validSection.match(/[A-Za-z0-9-_:/]+/g) || [];
+          }
+        },
+        extensions: ["vue"]
+      }]
+    })
+  );
+}
+
+// 打包分析
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   // 项目部署的基础路径
@@ -49,7 +75,36 @@ module.exports = {
       .set('@a', resolve('src/assets'))
       .set('@api', resolve('src/axios/api'))
       .set('libs', resolve('src/libs'))
-
+    config.module
+      .rule("images")
+      .use("image-webpack-loader")
+      .loader("image-webpack-loader")
+      .options({
+        mozjpeg: {
+          progressive: true,
+          quality: 65
+        },
+        optipng: {
+          enabled: false
+        },
+        pngquant: {
+          quality: "65-90",
+          speed: 4
+        },
+        gifsicle: {
+          interlaced: false
+        },
+        webp: {
+          quality: 75
+        }
+      });
+    //打包分析
+    if (process.env.IS_ANALYZ) {
+      config.plugin('webpack-report')
+        .use(BundleAnalyzerPlugin, [{
+          analyzerMode: 'static',
+        }]);
+    }
     config.output.chunkFilename(`js/[name].[chunkhash:8].js`)
 
   },
@@ -80,12 +135,12 @@ module.exports = {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
       // 开启压缩
-        config.plugins.push(new CompressionPlugin({
-          test:/\.js$|\.html$|\.css/,//匹配的文件
-          threshold:10240,//对超过10k的进行压缩
-          deleteOriginalAssets:true//是否删除文件
-        }))
-    
+      config.plugins.push(new CompressionPlugin({
+        test: /\.js$|\.html$|\.css/, //匹配的文件
+        threshold: 10240, //对超过10k的进行压缩
+        deleteOriginalAssets: true //是否删除文件
+      }))
+
     } else if (process.env.NODE_ENV === 'development') {
       // 为开发环境修改配置...
       console.log('开发环境')
@@ -109,8 +164,8 @@ module.exports = {
       less: {
         javascriptEnabled: true
       },
-      postcss: {//pc 需要关掉
-        plugins:   [
+      postcss: { //pc 需要关掉
+        plugins: [
           require("postcss-px2rem")({
             remUnit: 37.5,
 
@@ -158,5 +213,6 @@ module.exports = {
       ]
     }
   },
-
+  presets: [["@vue/app",{"useBuiltIns": "entry"}]],// ie 兼容配置
+  plugins: [...plugins, autoprefixer] //去除多余css 插件入口
 }

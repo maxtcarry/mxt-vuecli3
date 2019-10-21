@@ -11,6 +11,7 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.6.0",
     "amfe-flexible": "^2.2.1",
     "compression-webpack-plugin": "^3.0.0",
     "core-js": "^2.6.5",
@@ -23,6 +24,7 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^1.3.0",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-e2e-cypress": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
@@ -31,6 +33,8 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "image-webpack-loader": "^6.0.0",
+    "postcss-import": "^12.0.1",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
     "vue-loader": "^15.7.1",
