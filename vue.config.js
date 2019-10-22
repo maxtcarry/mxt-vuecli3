@@ -213,6 +213,6 @@ module.exports = {
       ]
     }
   },
-  presets: [["@vue/app",{"useBuiltIns": "entry"}]],// ie 兼容配置
-  plugins: [...plugins, autoprefixer] //去除多余css 插件入口
+  // presets: [["@vue/app",{"useBuiltIns": "entry"}]],// ie 兼容配置
+  // plugins: [...plugins, autoprefixer] //去除多余css 插件入口
 }
